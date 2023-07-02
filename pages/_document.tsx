@@ -5,7 +5,8 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+          <link rel="icon" type="image/png" href="/favicon.png" />
           <meta name="description" content="See my photos around the world." />
           <meta property="og:site_name" content="photos.willianjusten.com.br" />
           <meta
