@@ -55,10 +55,10 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               <span className="flex max-h-full max-w-full items-center justify-center">
                 <Bridge />
               </span>
-              <span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0 via-black to-black"></span>
+              <span className="absolute bottom-0 left-0 right-0 h-[400px] bg-gradient-to-b from-black/0 via-black to-black"></span>
             </div>
             <Logo />
-            <h1 className="mt-8 mb-4 text-base font-bold uppercase tracking-widest">
+            <h1 className="mb-4 mt-8 text-base font-bold uppercase tracking-widest">
               2022 Event Photos
             </h1>
             <p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
@@ -152,7 +152,7 @@ export async function getStaticProps() {
       height: result.height,
       width: result.width,
       public_id: result.public_id,
-      format: result.format,
+      format: result.format
     })
     i++
   }
@@ -168,7 +168,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      images: reducedResults,
-    },
+      images: reducedResults
+    }
   }
 }

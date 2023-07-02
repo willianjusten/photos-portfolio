@@ -30,7 +30,7 @@ const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
 
 export default Home
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async context => {
   const results = await getResults()
 
   let reducedResults: ImageProps[] = []
@@ -41,20 +41,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
       height: result.height,
       width: result.width,
       public_id: result.public_id,
-      format: result.format,
+      format: result.format
     })
     i++
   }
 
   const currentPhoto = reducedResults.find(
-    (img) => img.id === Number(context.params.photoId)
+    img => img.id === Number(context.params.photoId)
   )
   currentPhoto.blurDataUrl = await getBase64ImageUrl(currentPhoto)
 
   return {
     props: {
-      currentPhoto: currentPhoto,
-    },
+      currentPhoto: currentPhoto
+    }
   }
 }
 
@@ -72,6 +72,6 @@ export async function getStaticPaths() {
 
   return {
     paths: fullPaths,
-    fallback: false,
+    fallback: false
   }
 }
