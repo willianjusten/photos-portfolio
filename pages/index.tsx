@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Camera from '../components/Icons/Camera'
 import Modal from '../components/Modal'
 import cloudinary from '../utils/cloudinary'
@@ -11,7 +11,14 @@ import getBase64ImageUrl from '../utils/generateBlurPlaceholder'
 import type { ImageProps } from '../utils/types'
 import { useLastViewedPhoto } from '../utils/useLastViewedPhoto'
 
-const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
+const Home: NextPage = ({
+  images,
+  folders
+}: {
+  images: ImageProps[]
+  folders: string[]
+}) => {
+  const [selectedFolder, setSelectedFolder] = useState<string | null>(null)
   const router = useRouter()
   const { photoId } = router.query
   const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto()
@@ -63,15 +70,38 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               Brazilian based hobbyist photographer and Software Engineer that
               loves to travel and take photos.
             </p>
+
+            <p className="text-white/75 sm:max-w-[45ch]">Filter by places:</p>
+
+            <div className="flex gap-2">
+              {folders?.map(folder => (
+                <div
+                  key={folder}
+                  className={`z-10 cursor-pointer rounded-full bg-white px-3 py-1 text-black/80`}
+                  onClick={() => setSelectedFolder(folder)}
+                >
+                  {folder}
+                </div>
+              ))}
+
+              <div
+                className={`z-10 cursor-pointer rounded-[4px] bg-slate-500 px-2 py-1 text-white/80`}
+                onClick={() => setSelectedFolder(null)}
+              >
+                Clear
+              </div>
+            </div>
           </div>
-          {images.map(({ id, public_id, format, blurDataUrl }) => (
+          {images.map(({ id, public_id, format, blurDataUrl, folder }) => (
             <Link
               key={id}
               href={`/?photoId=${id}`}
               as={`/p/${id}`}
               ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
               shallow
-              className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
+              className={`${
+                selectedFolder && selectedFolder !== folder ? 'opacity-20' : ''
+              } after:content group relative mb-5 block w-full  cursor-zoom-in transition after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight`}
             >
               <Image
                 alt="Willian Justen photo"
@@ -82,6 +112,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
                 src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_720/${public_id}.${format}`}
                 width={720}
                 height={480}
+                loading="lazy"
                 sizes="(max-width: 640px) 100vw,
                   (max-width: 1280px) 50vw,
                   (max-width: 1536px) 33vw,
@@ -119,22 +150,29 @@ export default Home
 
 export async function getStaticProps() {
   const results = await cloudinary.v2.search
-    .expression(`folder:${process.env.CLOUDINARY_FOLDER}/*`)
-    .sort_by('public_id', 'desc')
-    .max_results(400)
+    .sort_by('uploaded_at', 'desc')
+    .max_results(2000)
     .execute()
+
   let reducedResults: ImageProps[] = []
+  let folders: string[] = []
 
   let i = 0
   for (let result of results.resources) {
     reducedResults.push({
       id: i,
+      folder: result.folder,
       height: result.height,
       width: result.width,
       aspect_ratio: result.aspect_ratio,
       public_id: result.public_id,
       format: result.format
     })
+
+    if (!folders.includes(result.folder)) {
+      folders.push(result.folder)
+    }
+
     i++
   }
 
@@ -149,7 +187,8 @@ export async function getStaticProps() {
 
   return {
     props: {
-      images: reducedResults
+      images: reducedResults,
+      folders
     }
   }
 }

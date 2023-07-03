@@ -6,6 +6,7 @@ export interface ImageProps {
   aspect_ratio: string
   public_id: string
   format: string
+  folder?: string
   blurDataUrl?: string
 }
 
