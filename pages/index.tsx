@@ -11,7 +11,6 @@ import MainCard from 'components/MainCard'
 import Modal from 'components/Modal'
 import ImageCard from 'components/ImageCard'
 import Footer from 'components/Footer'
-import getResults from 'utils/cachedImages'
 
 const Home: NextPage = ({
   images,
@@ -89,7 +88,10 @@ const Home: NextPage = ({
 export default Home
 
 export async function getStaticProps() {
-  const results = await getResults()
+  const results = await cloudinary.v2.search
+    .sort_by('public_id', 'desc')
+    .max_results(2000)
+    .execute()
 
   let reducedResults: ImageProps[] = []
   let folders: string[] = []
