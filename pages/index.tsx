@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from 'react'
 import { CldImage } from 'next-cloudinary'
 import Camera from '../components/Icons/Camera'
+import Filter from '../components/Icons/Filter'
 import Modal from '../components/Modal'
 import cloudinary from '../utils/cloudinary'
 import getBase64ImageUrl from '../utils/generateBlurPlaceholder'
@@ -18,7 +19,8 @@ const Home: NextPage = ({
   images: ImageProps[]
   folders: string[]
 }) => {
-  const [selectedFolder, setSelectedFolder] = useState<string | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [selectedFolder, setSelectedFolder] = useState('All')
   const router = useRouter()
   const { photoId } = router.query
   const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto()
@@ -56,12 +58,12 @@ const Home: NextPage = ({
           />
         )}
         <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-          <div className="after:content relative mb-5 flex h-[400px] flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 px-6 pb-16 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0">
+          <div className="after:content relative mb-5 flex h-[300px] flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 px-6 pb-6 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0">
             <div className="absolute inset-0 flex items-center justify-center opacity-20">
-              <span className="mt-[-70px] flex max-h-full max-w-full items-center justify-center">
+              <span className="mt-[-40px] flex max-h-full max-w-full items-center justify-center">
                 <Camera />
               </span>
-              <span className="absolute bottom-0 left-0 right-0 h-[350px] bg-gradient-to-b from-black/0 via-black to-black"></span>
+              <span className="absolute bottom-0 left-0 right-0 h-[280px] bg-gradient-to-b from-black/0 via-black to-black"></span>
             </div>
             <h1 className="mb-4 mt-8 text-xl font-bold tracking-widest">
               Willian Justen - Photography
@@ -70,27 +72,6 @@ const Home: NextPage = ({
               Brazilian based hobbyist photographer and Software Engineer that
               loves to travel and take photos.
             </p>
-
-            <p className="text-white/75 sm:max-w-[45ch]">Filter by places:</p>
-
-            <div className="flex gap-2">
-              {folders?.map(folder => (
-                <div
-                  key={folder}
-                  className={`z-10 cursor-pointer rounded-full bg-white px-3 py-1 text-black/80`}
-                  onClick={() => setSelectedFolder(folder)}
-                >
-                  {folder}
-                </div>
-              ))}
-
-              <div
-                className={`z-10 cursor-pointer rounded-[4px] bg-slate-500 px-2 py-1 text-white/80`}
-                onClick={() => setSelectedFolder(null)}
-              >
-                Clear
-              </div>
-            </div>
           </div>
           {images.map(({ id, public_id, blurDataUrl, folder }) => (
             <Link
@@ -100,7 +81,9 @@ const Home: NextPage = ({
               ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
               shallow
               className={`${
-                selectedFolder && selectedFolder !== folder ? 'hidden' : ''
+                selectedFolder !== 'All' && selectedFolder !== folder
+                  ? 'hidden'
+                  : ''
               } after:content group relative mb-5 block w-full  cursor-zoom-in transition after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight`}
             >
               <CldImage
@@ -121,7 +104,51 @@ const Home: NextPage = ({
             </Link>
           ))}
         </div>
+
+        <menu
+          className={`fixed bottom-20 right-5 mb-5 flex w-48 flex-col gap-2 rounded-lg bg-[#161616]/90 p-5 shadow-md transition ${
+            menuOpen ? 'visible' : 'invisible'
+          }`}
+        >
+          {folders?.map(folder => (
+            <div
+              key={folder}
+              className={`rounded-fullpx-3 z-10 cursor-pointer py-1 transition hover:text-white ${
+                selectedFolder === folder ? 'text-white' : 'text-white/50'
+              }`}
+              onClick={() => setSelectedFolder(folder)}
+            >
+              {folder}
+            </div>
+          ))}
+
+          <div className="h-[1px] border-t-0 bg-neutral-100/20 opacity-100" />
+
+          <div
+            className={`rounded-fullpx-3 z-10 cursor-pointer py-1 transition hover:text-white ${
+              selectedFolder === 'All' ? 'text-white' : 'text-white/50'
+            }`}
+            onClick={() => setSelectedFolder('All')}
+          >
+            All photos
+          </div>
+        </menu>
+
+        <img
+          src="arrow.png"
+          alt="Filter by place here"
+          className="invisible fixed bottom-24 right-8 h-[450px] ultrawide:visible"
+        />
+
+        <button
+          className="fixed bottom-6 right-5 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-black shadow-md transition hover:bg-black/90 xl:h-16 xl:w-16"
+          onClick={() => setMenuOpen(!menuOpen)}
+          title="Filter by place"
+        >
+          <Filter className="w-9 text-white/50 transition hover:text-white/80 xl:w-10" />
+        </button>
       </main>
+
       <footer className="p-6 text-center text-white/80 sm:p-12">
         Made with 🤍 by{' '}
         <a
@@ -158,7 +185,7 @@ export async function getStaticProps() {
   let folders: string[] = []
 
   let i = 0
-  for (let result of results.resources) {
+  for (let result of results?.resources) {
     reducedResults.push({
       id: i,
       folder: result.folder,
@@ -176,7 +203,7 @@ export async function getStaticProps() {
     i++
   }
 
-  const blurImagePromises = results.resources.map((image: ImageProps) => {
+  const blurImagePromises = results?.resources?.map((image: ImageProps) => {
     return getBase64ImageUrl(image)
   })
   const imagesWithBlurDataUrls = await Promise.all(blurImagePromises)
