@@ -150,7 +150,7 @@ export default Home
 
 export async function getStaticProps() {
   const results = await cloudinary.v2.search
-    .sort_by('uploaded_at', 'desc')
+    .sort_by('public_id', 'desc')
     .max_results(2000)
     .execute()
 
