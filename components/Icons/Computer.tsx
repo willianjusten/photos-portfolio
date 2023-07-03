@@ -3,8 +3,8 @@ export default function Computer() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 64 64"
-      width="32"
-      height="32"
+      width="28"
+      height="28"
     >
       <path
         d="m1.42 38.13 61.08-.19v3.48a7 7 0 0 1-7 7H8.39a7 7 0 0 1-7-7V14.83a7 7 0 0 1 7-7h47.13a7 7 0 0 1 7 7v17.9"
