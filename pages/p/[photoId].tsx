@@ -17,7 +17,7 @@ const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
   return (
     <>
       <Head>
-        <title>Next.js Conf 2022 Photos</title>
+        <title>Willian Justen - Photography</title>
         <meta property="og:image" content={currentPhotoUrl} />
         <meta name="twitter:image" content={currentPhotoUrl} />
       </Head>
@@ -40,6 +40,7 @@ export const getStaticProps: GetStaticProps = async context => {
       id: i,
       height: result.height,
       width: result.width,
+      aspect_ratio: result.aspect_ratio,
       public_id: result.public_id,
       format: result.format
     })

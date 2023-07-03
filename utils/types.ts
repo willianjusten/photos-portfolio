@@ -3,6 +3,7 @@ export interface ImageProps {
   id: number
   height: string
   width: string
+  aspect_ratio: string
   public_id: string
   format: string
   blurDataUrl?: string
