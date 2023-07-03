@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Carousel from '../../components/Carousel'
 import getResults from '../../utils/cachedImages'
 import cloudinary from '../../utils/cloudinary'
+import { CldOgImage } from 'next-cloudinary'
 import getBase64ImageUrl from '../../utils/generateBlurPlaceholder'
 import type { ImageProps } from '../../utils/types'
 
@@ -12,15 +13,13 @@ const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
   const { photoId } = router.query
   let index = Number(photoId)
 
-  const currentPhotoUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_2560/${currentPhoto.public_id}.${currentPhoto.format}`
-
   return (
     <>
       <Head>
         <title>Willian Justen - Photography</title>
-        <meta property="og:image" content={currentPhotoUrl} />
-        <meta name="twitter:image" content={currentPhotoUrl} />
       </Head>
+      <CldOgImage src={currentPhoto.public_id} alt="Willian Justen - Photo" />
+
       <main className="mx-auto max-w-[1960px] p-4">
         <Carousel currentPhoto={currentPhoto} index={index} />
       </main>

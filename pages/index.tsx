@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from 'react'
+import { CldImage } from 'next-cloudinary'
 import Camera from '../components/Icons/Camera'
 import Modal from '../components/Modal'
 import cloudinary from '../utils/cloudinary'
@@ -92,7 +92,7 @@ const Home: NextPage = ({
               </div>
             </div>
           </div>
-          {images.map(({ id, public_id, format, blurDataUrl, folder }) => (
+          {images.map(({ id, public_id, blurDataUrl, folder }) => (
             <Link
               key={id}
               href={`/?photoId=${id}`}
@@ -103,13 +103,13 @@ const Home: NextPage = ({
                 selectedFolder && selectedFolder !== folder ? 'hidden' : ''
               } after:content group relative mb-5 block w-full  cursor-zoom-in transition after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight`}
             >
-              <Image
+              <CldImage
                 alt="Willian Justen photo"
                 className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
                 style={{ transform: 'translate3d(0, 0, 0)' }}
                 placeholder="blur"
                 blurDataURL={blurDataUrl}
-                src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_720/${public_id}.${format}`}
+                src={public_id}
                 width={720}
                 height={480}
                 loading="lazy"
