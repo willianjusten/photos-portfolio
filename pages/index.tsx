@@ -100,7 +100,7 @@ const Home: NextPage = ({
               ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
               shallow
               className={`${
-                selectedFolder && selectedFolder !== folder ? 'opacity-20' : ''
+                selectedFolder && selectedFolder !== folder ? 'hidden' : ''
               } after:content group relative mb-5 block w-full  cursor-zoom-in transition after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight`}
             >
               <Image
