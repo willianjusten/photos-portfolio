@@ -20,8 +20,6 @@ export default function SharedModal({
   currentPhoto,
   direction
 }: SharedModalProps) {
-  const [loaded, setLoaded] = useState(false)
-
   let filteredImages = images?.filter((img: ImageProps) =>
     range(index - 15, index + 15).includes(img.id)
   )
@@ -60,25 +58,23 @@ export default function SharedModal({
             className="relative m-auto flex max-h-[90vh] items-center justify-center"
             style={{ aspectRatio: currentImage.aspect_ratio }}
           >
-            {/* Buttons */}
-            {loaded && (
-              <div
-                className="relative z-50 max-h-full w-full"
-                style={{ aspectRatio: currentImage.aspect_ratio }}
-              >
-                {navigation && (
-                  <ModalNavigation
-                    images={images}
-                    index={index}
-                    changePhotoId={changePhotoId}
-                  />
-                )}
+            <div
+              className="relative z-50 max-h-full w-full"
+              style={{ aspectRatio: currentImage.aspect_ratio }}
+            >
+              {navigation && (
+                <ModalNavigation
+                  images={images}
+                  index={index}
+                  changePhotoId={changePhotoId}
+                />
+              )}
 
-                <UserActions currentImage={currentImage} index={index} />
+              <UserActions currentImage={currentImage} index={index} />
 
-                <ModalBack navigation={navigation} closeModal={closeModal} />
-              </div>
-            )}
+              <ModalBack navigation={navigation} closeModal={closeModal} />
+            </div>
+
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={index}
@@ -91,11 +87,12 @@ export default function SharedModal({
               >
                 <CldImage
                   src={currentImage.public_id}
+                  placeholder="blur"
+                  blurDataURL={currentImage.blurDataUrl}
                   width={1920}
                   height={1280}
-                  priority
+                  format="webp"
                   alt="Willian Justen - Photo"
-                  onLoadingComplete={() => setLoaded(true)}
                 />
               </motion.div>
             </AnimatePresence>
