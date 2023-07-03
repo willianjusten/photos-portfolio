@@ -3,7 +3,7 @@ export default function Camera() {
     <svg
       viewBox="0 0 48 48"
       width="540"
-      height="540"
+      height="350"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
