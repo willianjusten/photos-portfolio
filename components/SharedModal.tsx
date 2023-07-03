@@ -99,7 +99,7 @@ export default function SharedModal({
                       href={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${currentImage.public_id}.${currentImage.format}`}
                       className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
                       target="_blank"
-                      title="Open fullsize version"
+                      title="Open full quality version"
                       rel="noreferrer"
                     >
                       <ArrowTopRightOnSquareIcon className="h-5 w-5" />
@@ -109,7 +109,7 @@ export default function SharedModal({
                       href={`https://twitter.com/intent/tweet?text=Check%20out%20this%20pic%20from%20@Willian_Justen!%0A%0Ahttps://photos.willianjusten.com.br/p/${index}`}
                       className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
                       target="_blank"
-                      title="Open fullsize version"
+                      title="Share on Twitter"
                       rel="noreferrer"
                     >
                       <Twitter className="h-5 w-5" />
@@ -123,7 +123,7 @@ export default function SharedModal({
                       )
                     }
                     className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-                    title="Download fullsize version"
+                    title="Download full quality version"
                   >
                     <ArrowDownTrayIcon className="h-5 w-5" />
                   </button>
