@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Filter } from 'components/Icons'
+import useClickOutside from 'hooks/useClickOutside'
 
 export default function Menu({ folders, selectedFolder, setSelectedFolder }) {
+  const $menu = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
+  useClickOutside($menu, () => setMenuOpen(false))
+
   return (
-    <>
+    <div ref={$menu}>
       <img
         src="arrow.png"
         alt="Filter by place here"
@@ -48,6 +52,6 @@ export default function Menu({ folders, selectedFolder, setSelectedFolder }) {
           All photos
         </div>
       </menu>
-    </>
+    </div>
   )
 }
