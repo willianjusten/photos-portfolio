@@ -1,5 +1,4 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
-import Analytics from '../components/Analytics'
 
 class MyDocument extends Document {
   render() {
@@ -25,7 +24,6 @@ class MyDocument extends Document {
         <body className="bg-main antialiased">
           <Main />
           <NextScript />
-          <Analytics />
         </body>
       </Html>
     )
