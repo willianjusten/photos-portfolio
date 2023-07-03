@@ -4,8 +4,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from 'react'
 import { CldImage } from 'next-cloudinary'
-import Camera from '../components/Icons/Camera'
 import Filter from '../components/Icons/Filter'
+import Twitter from '../components/Icons/Twitter'
+import Instagram from '../components/Icons/Instagram'
+import Camera from '../components/Icons/Camera'
 import Modal from '../components/Modal'
 import cloudinary from '../utils/cloudinary'
 import getBase64ImageUrl from '../utils/generateBlurPlaceholder'
@@ -58,20 +60,49 @@ const Home: NextPage = ({
           />
         )}
         <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-          <div className="after:content relative mb-5 flex h-[300px] flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 px-6 pb-6 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0">
-            <div className="absolute inset-0 flex items-center justify-center opacity-20">
-              <span className="mt-[-40px] flex max-h-full max-w-full items-center justify-center">
-                <Camera />
-              </span>
-              <span className="absolute bottom-0 left-0 right-0 h-[280px] bg-gradient-to-b from-black/0 via-black to-black"></span>
+          <div className="after:content relative mb-5 flex aspect-square flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 px-6 pb-6 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0">
+            <img
+              className="absolute inset-0 w-full"
+              src="https://github.com/willianjusten.png"
+              alt="Willian Justen logo"
+            />
+            <div className="absolute inset-0 z-10 flex flex-col justify-end bg-gradient-to-b from-black/10 to-black/80 px-4 py-4">
+              <h1 className="mb-2 text-lg font-bold tracking-widest sm:text-xl">
+                Willian Justen
+              </h1>
+              <p className="text-sm text-white/75 sm:max-w-[45ch] sm:text-base">
+                Brazilian based photographer and Software Engineer that loves to
+                travel and take photos.
+              </p>
+              <div className="mt-2 flex items-center justify-center gap-3">
+                <a
+                  href="https://twitter.com/Willian_justen"
+                  target="_blank"
+                  className="font-semibold text-white/90 hover:text-white"
+                  rel="noreferrer"
+                >
+                  <Twitter />
+                </a>
+
+                <a
+                  href="https://www.instagram.com/will_justen/"
+                  target="_blank"
+                  className="font-semibold text-white/90 hover:text-white"
+                  rel="noreferrer"
+                >
+                  <Instagram />
+                </a>
+
+                <a
+                  href="https://unsplash.com/@willianjusten"
+                  target="_blank"
+                  className="font-semibold text-white/90 hover:text-white"
+                  rel="noreferrer"
+                >
+                  <Camera />
+                </a>
+              </div>
             </div>
-            <h1 className="mb-4 mt-8 text-xl font-bold tracking-widest">
-              Willian Justen - Photography
-            </h1>
-            <p className="text-white/75 sm:max-w-[45ch]">
-              Brazilian based hobbyist photographer and Software Engineer that
-              loves to travel and take photos.
-            </p>
           </div>
           {images.map(({ id, public_id, blurDataUrl, folder }) => (
             <Link
