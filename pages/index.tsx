@@ -106,7 +106,7 @@ const Home: NextPage = ({
         </div>
 
         <menu
-          className={`fixed bottom-20 right-5 mb-5 flex w-48 flex-col gap-2 rounded-lg bg-[#161616]/90 p-5 shadow-md transition ${
+          className={`fixed bottom-20 right-5 mb-5 flex w-48 flex-col gap-2 rounded-lg bg-medium p-5 shadow-md transition ${
             menuOpen ? 'visible' : 'invisible'
           }`}
         >
@@ -114,7 +114,7 @@ const Home: NextPage = ({
             <div
               key={folder}
               className={`rounded-fullpx-3 z-10 cursor-pointer py-1 transition hover:text-white ${
-                selectedFolder === folder ? 'text-white' : 'text-white/50'
+                selectedFolder === folder ? 'text-details' : 'text-white/50'
               }`}
               onClick={() => setSelectedFolder(folder)}
             >
@@ -126,7 +126,7 @@ const Home: NextPage = ({
 
           <div
             className={`rounded-fullpx-3 z-10 cursor-pointer py-1 transition hover:text-white ${
-              selectedFolder === 'All' ? 'text-white' : 'text-white/50'
+              selectedFolder === 'All' ? 'text-details' : 'text-white/50'
             }`}
             onClick={() => setSelectedFolder('All')}
           >
@@ -141,7 +141,7 @@ const Home: NextPage = ({
         />
 
         <button
-          className="fixed bottom-6 right-5 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-black shadow-md transition hover:bg-black/90 xl:h-16 xl:w-16"
+          className="fixed bottom-6 right-5 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-medium shadow-md transition hover:bg-medium/90 xl:h-16 xl:w-16"
           onClick={() => setMenuOpen(!menuOpen)}
           title="Filter by place"
         >

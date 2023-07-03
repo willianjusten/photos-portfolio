@@ -21,7 +21,7 @@ class MyDocument extends Document {
             content="See my photos around the world."
           />
         </Head>
-        <body className="bg-black antialiased">
+        <body className="bg-main antialiased">
           <Main />
           <NextScript />
         </body>

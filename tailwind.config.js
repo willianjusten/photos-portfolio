@@ -10,6 +10,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        main: '#030518',
+        medium: '#0a0c21',
+        details: '#f231A5'
+      },
       boxShadow: {
         highlight: 'inset 0 0 0 1px rgba(255, 255, 255, 0.05)'
       },
