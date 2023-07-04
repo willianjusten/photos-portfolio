@@ -36,9 +36,7 @@ export default function ImageCard({
         loading="lazy"
         sizes="
           (max-width: 648px) 100vw,
-          (min-width: 648px) and (max-width: 980px) 50vw,
-          (min-width: 1280px) and (max-width: 1536px) 33vw,
-          20vw
+          30vw
         "
       />
     </Link>
