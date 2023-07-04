@@ -1,7 +1,7 @@
 export interface ImageProps {
   id: number
-  height?: string
-  width?: string
+  height?: string | number
+  width?: string | number
   aspect_ratio?: string
   public_id: string
   format?: string

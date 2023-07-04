@@ -11,6 +11,7 @@ import MainCard from 'components/MainCard'
 import Modal from 'components/Modal'
 import ImageCard from 'components/ImageCard'
 import Footer from 'components/Footer'
+import InfiniteScroll from 'components/InfiniteScroll'
 
 const Home: NextPage = ({
   images,
@@ -29,7 +30,7 @@ const Home: NextPage = ({
   useEffect(() => {
     // This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
     if (lastViewedPhoto && !photoId) {
-      lastViewedPhotoRef.current.scrollIntoView({ block: 'center' })
+      lastViewedPhotoRef?.current?.scrollIntoView({ block: 'center' })
       setLastViewedPhoto(null)
     }
   }, [photoId, lastViewedPhoto, setLastViewedPhoto])
@@ -59,18 +60,24 @@ const Home: NextPage = ({
         <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
           <MainCard />
 
-          {images.map(({ id, public_id, blurDataUrl, folder }) => (
-            <ImageCard
-              key={id}
-              id={id}
-              public_id={public_id}
-              blurDataUrl={blurDataUrl}
-              folder={folder}
-              selectedFolder={selectedFolder}
-              lastViewedPhoto={lastViewedPhoto}
-              lastViewedPhotoRef={lastViewedPhotoRef}
-            />
-          ))}
+          <InfiniteScroll chunkSize={30}>
+            {images.map(
+              ({ id, public_id, blurDataUrl, width, height, folder }) => (
+                <ImageCard
+                  key={id}
+                  id={id}
+                  public_id={public_id}
+                  blurDataUrl={blurDataUrl}
+                  width={width}
+                  height={height}
+                  folder={folder}
+                  selectedFolder={selectedFolder}
+                  lastViewedPhoto={lastViewedPhoto}
+                  lastViewedPhotoRef={lastViewedPhotoRef}
+                />
+              )
+            )}
+          </InfiniteScroll>
         </div>
 
         <Menu

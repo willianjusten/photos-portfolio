@@ -5,6 +5,8 @@ import { ImageProps } from 'utils/types'
 export default function ImageCard({
   id,
   public_id,
+  width,
+  height,
   blurDataUrl,
   lastViewedPhoto,
   lastViewedPhotoRef,
@@ -33,8 +35,8 @@ export default function ImageCard({
         placeholder="blur"
         blurDataURL={blurDataUrl}
         src={public_id}
-        width={720}
-        height={480}
+        width={width > height ? 720 : 480}
+        height={height > width ? 720 : 480}
         format="webp"
         loading="lazy"
         sizes="(max-width: 640px) 100vw,
