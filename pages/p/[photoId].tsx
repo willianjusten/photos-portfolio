@@ -71,6 +71,7 @@ export async function getStaticPaths() {
   }
 
   return {
-    paths: fullPaths
+    paths: fullPaths,
+    fallback: false
   }
 }
