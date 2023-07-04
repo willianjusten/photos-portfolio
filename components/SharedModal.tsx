@@ -89,10 +89,17 @@ export default function SharedModal({
                   src={currentImage.public_id}
                   placeholder="blur"
                   blurDataURL={currentImage.blurDataUrl}
-                  width={1920}
-                  height={1280}
+                  width={currentImage.width > currentImage.height ? 1920 : 1280}
+                  height={
+                    currentImage.height > currentImage.width ? 1920 : 1280
+                  }
                   format="webp"
+                  priority
                   alt="Willian Justen - Photo"
+                  sizes="(max-width: 640px) 100vw,
+                      (max-width: 1280px) 50vw,
+                      (max-width: 1536px) 33vw,
+                      25vw"
                 />
               </motion.div>
             </AnimatePresence>
