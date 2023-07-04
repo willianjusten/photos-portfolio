@@ -1,3 +1,3 @@
 # Photography Portfolio
 
-> This is my Street Photography Portfolio using [Next.js template](https://github.com/vercel/next.js/tree/canary/examples/with-cloudinary), [Cloudinary](https://cloudinary.com), and [Tailwind](https://tailwindcss.com).
+> I'll use this site to post mostly Street Photography and photos that I don't post on Unsplash due to their strict guidelines.
