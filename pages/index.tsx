@@ -12,6 +12,21 @@ import Modal from 'components/Modal'
 import ImageCard from 'components/ImageCard'
 import Footer from 'components/Footer'
 
+const reorder = (arr, columns) => {
+  const cols = columns
+  const out = []
+  let col = 0
+  while (col < cols) {
+    for (let i = 0; i < arr.length; i += cols) {
+      let _val = arr[i + col]
+      if (_val !== undefined) out.push(_val)
+    }
+    col++
+  }
+
+  return out
+}
+
 const Home: NextPage = ({
   images,
   folders
@@ -59,7 +74,7 @@ const Home: NextPage = ({
         <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
           <MainCard />
 
-          {images.map(({ id, public_id, blurDataUrl, folder }) => (
+          {reorder(images, 5).map(({ id, public_id, blurDataUrl, folder }) => (
             <ImageCard
               key={id}
               id={id}
