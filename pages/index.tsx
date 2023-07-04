@@ -32,7 +32,7 @@ const Home: NextPage = ({
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement
-    const threshold = 200 // margin to start loading more before reaching the end
+    const threshold = 400 // margin to start loading more before reaching the end
 
     if (scrollTop + clientHeight >= scrollHeight - threshold) {
       const nextChunk = data.slice(
