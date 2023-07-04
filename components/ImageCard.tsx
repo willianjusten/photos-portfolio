@@ -13,7 +13,6 @@ export default function ImageCard({
 }: ImageProps & {
   lastViewedPhoto: string | null
   lastViewedPhotoRef: React.MutableRefObject<HTMLAnchorElement | null>
-  selectedFolder: string
 }) {
   return (
     <Link

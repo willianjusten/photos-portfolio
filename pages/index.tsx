@@ -1,7 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useState, useEffect, useRef } from 'react'
+import { Fragment, useState, useEffect, useRef } from 'react'
+import { Masonry } from 'react-plock'
 import cloudinary from 'utils/cloudinary'
 import getBase64ImageUrl from 'utils/generateBlurPlaceholder'
 import type { ImageProps } from 'utils/types'
@@ -18,6 +19,7 @@ const Home: NextPage = ({
   images: ImageProps[]
   folders: string[]
 }) => {
+  const [showMain, setShowMain] = useState(true)
   const [data, setData] = useState(images)
   const [selectedFolder, setSelectedFolder] = useState('All')
   const router = useRouter()
@@ -108,35 +110,32 @@ const Home: NextPage = ({
             }}
           />
         )}
-        <div className="">
-          <Masonry
-            items={visibleImages}
-            config={{
-              columns: [1, 2, 3, 4],
-              gap: [16, 16, 16, 16],
-              media: [640, 980, 1280, 1536]
-            }}
-            render={(
-              { id, public_id, blurDataUrl, width, height, folder },
-              index
-            ) => (
-              <div key={id}>
-                {index === 0 && <MainCard />}
+
+        <Masonry
+          items={visibleImages}
+          config={{
+            columns: [1, 2, 3, 4],
+            gap: [16, 16, 16, 16],
+            media: [640, 980, 1280, 1536]
+          }}
+          render={({ id, public_id, blurDataUrl, width, height }, index) => {
+            return (
+              <Fragment key={id}>
+                {showMain && <MainCard ref={() => setShowMain(false)} />}
                 <ImageCard
+                  key={id}
                   id={id}
                   public_id={public_id}
                   blurDataUrl={blurDataUrl}
                   width={width}
                   height={height}
-                  folder={folder}
-                  selectedFolder={selectedFolder}
                   lastViewedPhoto={lastViewedPhoto}
                   lastViewedPhotoRef={lastViewedPhotoRef}
                 />
-              </div>
-            )}
-          />
-        </div>
+              </Fragment>
+            )
+          }}
+        />
 
         <Menu
           folders={folders}
