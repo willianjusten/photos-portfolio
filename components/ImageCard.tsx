@@ -26,7 +26,7 @@ export default function ImageCard({
       shallow
       className={`${
         selectedFolder !== 'All' && selectedFolder !== folder ? 'hidden' : ''
-      } after:content group relative mb-5 block w-full  cursor-zoom-in transition after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight`}
+      } after:content group relative block w-full  cursor-zoom-in transition after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight`}
     >
       <CldImage
         alt="Willian Justen photo"

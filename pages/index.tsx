@@ -12,6 +12,8 @@ import Modal from 'components/Modal'
 import ImageCard from 'components/ImageCard'
 import Footer from 'components/Footer'
 
+import { Masonry } from 'react-plock'
+
 const Home: NextPage = ({
   images,
   folders
@@ -100,25 +102,31 @@ const Home: NextPage = ({
             }}
           />
         )}
-        <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-          <MainCard />
-
-          {visibleImages.map(
-            ({ id, public_id, blurDataUrl, width, height, folder }) => (
-              <ImageCard
-                key={id}
-                id={id}
-                public_id={public_id}
-                blurDataUrl={blurDataUrl}
-                width={width}
-                height={height}
-                folder={folder}
-                selectedFolder={selectedFolder}
-                lastViewedPhoto={lastViewedPhoto}
-                lastViewedPhotoRef={lastViewedPhotoRef}
-              />
-            )
-          )}
+        <div className="">
+          <Masonry
+            items={visibleImages}
+            config={{
+              columns: [1, 2, 3, 4],
+              gap: [16, 16, 16, 16],
+              media: [640, 980, 1280, 1536]
+            }}
+            render={({ id, public_id, blurDataUrl, width, height, folder }) => (
+              <div key={id}>
+                {id === 0 && <MainCard />}
+                <ImageCard
+                  id={id}
+                  public_id={public_id}
+                  blurDataUrl={blurDataUrl}
+                  width={width}
+                  height={height}
+                  folder={folder}
+                  selectedFolder={selectedFolder}
+                  lastViewedPhoto={lastViewedPhoto}
+                  lastViewedPhotoRef={lastViewedPhotoRef}
+                />
+              </div>
+            )}
+          />
         </div>
 
         <Menu

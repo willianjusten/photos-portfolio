@@ -2,7 +2,7 @@ import SocialLinks from './SocialLinks'
 
 export default function MainCard() {
   return (
-    <div className="after:content relative mb-5 flex aspect-square flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 px-6 pb-6 pt-64 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0">
+    <div className="after:content relative mb-5 flex aspect-square flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-white/10 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0">
       <img
         className="absolute inset-0 w-full"
         src="https://github.com/willianjusten.png"
