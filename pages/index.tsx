@@ -12,21 +12,6 @@ import Modal from 'components/Modal'
 import ImageCard from 'components/ImageCard'
 import Footer from 'components/Footer'
 
-const reorder = (arr, columns) => {
-  const cols = columns
-  const out = []
-  let col = 0
-  while (col < cols) {
-    for (let i = 0; i < arr.length; i += cols) {
-      let _val = arr[i + col]
-      if (_val !== undefined) out.push(_val)
-    }
-    col++
-  }
-
-  return out
-}
-
 const Home: NextPage = ({
   images,
   folders
@@ -74,7 +59,7 @@ const Home: NextPage = ({
         <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
           <MainCard />
 
-          {reorder(images, 4).map(({ id, public_id, blurDataUrl, folder }) => (
+          {images.map(({ id, public_id, blurDataUrl, folder }) => (
             <ImageCard
               key={id}
               id={id}
@@ -101,6 +86,21 @@ const Home: NextPage = ({
 }
 
 export default Home
+
+const reorder = (arr, columns) => {
+  const cols = columns
+  const out = []
+  let col = 0
+  while (col < cols) {
+    for (let i = 0; i < arr.length; i += cols) {
+      let _val = arr[i + col]
+      if (_val !== undefined) out.push(_val)
+    }
+    col++
+  }
+
+  return out
+}
 
 export async function getStaticProps() {
   const results = await cloudinary.v2.search
@@ -141,7 +141,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      images: reducedResults,
+      images: reorder(reducedResults.slice(0, reducedResults.length - 1), 4),
       folders
     }
   }
