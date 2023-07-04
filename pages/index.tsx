@@ -87,21 +87,6 @@ const Home: NextPage = ({
 
 export default Home
 
-const reorder = (arr, columns) => {
-  const cols = columns
-  const out = []
-  let col = 0
-  while (col < cols) {
-    for (let i = 0; i < arr.length; i += cols) {
-      let _val = arr[i + col]
-      if (_val !== undefined) out.push(_val)
-    }
-    col++
-  }
-
-  return out
-}
-
 export async function getStaticProps() {
   const results = await cloudinary.v2.search
     .sort_by('folder', 'desc')
@@ -141,7 +126,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      images: reorder(reducedResults.slice(0, reducedResults.length - 1), 4),
+      images: reducedResults,
       folders
     }
   }
