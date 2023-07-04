@@ -10,9 +10,6 @@ import Menu from 'components/Menu'
 import MainCard from 'components/MainCard'
 import Modal from 'components/Modal'
 import ImageCard from 'components/ImageCard'
-import Footer from 'components/Footer'
-
-import { Masonry } from 'react-plock'
 
 const Home: NextPage = ({
   images,
@@ -147,8 +144,6 @@ const Home: NextPage = ({
           setSelectedFolder={setSelectedFolder}
         />
       </main>
-
-      <Footer />
     </>
   )
 }
