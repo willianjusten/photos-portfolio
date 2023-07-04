@@ -30,48 +30,27 @@ const Home: NextPage = ({
 
   const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null)
 
-  useEffect(() => {
-    // This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
-    if (lastViewedPhoto && !photoId) {
-      lastViewedPhotoRef?.current?.scrollIntoView({ block: 'center' })
-      setLastViewedPhoto(null)
-    }
-  }, [photoId, lastViewedPhoto, setLastViewedPhoto])
+  const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement
+    const threshold = 200 // margin to start loading more before reaching the end
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!window) return
-      const windowHeight =
-        'innerHeight' in window
-          ? window.innerHeight
-          : document.documentElement.offsetHeight
-      const body = document.body
-      const html = document.documentElement
-      const docHeight = Math.max(
-        body.scrollHeight,
-        body.offsetHeight,
-        html.clientHeight,
-        html.scrollHeight,
-        html.offsetHeight
+    if (scrollTop + clientHeight >= scrollHeight - threshold) {
+      const nextChunk = data.slice(
+        visibleImages.length,
+        visibleImages.length + chunkSize
       )
-      const windowBottom = windowHeight + window.pageYOffset
-      const threshold = 200 // Adjust the threshold value as per your requirements
-
-      if (windowBottom >= docHeight - threshold) {
-        // We've reached the bottom of the page (with threshold), load more images
-        const nextChunk = data.slice(
-          visibleImages.length,
-          visibleImages.length + chunkSize
-        )
-        setVisibleImages(prevVisibleImages => [
-          ...prevVisibleImages,
-          ...nextChunk
-        ])
-      }
+      setVisibleImages(prevVisibleImages => [
+        ...prevVisibleImages,
+        ...nextChunk
+      ])
     }
+  }
 
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [visibleImages, data, chunkSize])
 
   useEffect(() => {
@@ -86,6 +65,14 @@ const Home: NextPage = ({
       )
     )
   }, [selectedFolder])
+
+  useEffect(() => {
+    // This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
+    if (lastViewedPhoto && !photoId) {
+      lastViewedPhotoRef?.current?.scrollIntoView({ block: 'center' })
+      setLastViewedPhoto(null)
+    }
+  }, [photoId, lastViewedPhoto, setLastViewedPhoto])
 
   return (
     <>
