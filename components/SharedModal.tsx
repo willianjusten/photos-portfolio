@@ -82,11 +82,9 @@ export default function SharedModal({
                   src={currentImage.public_id}
                   placeholder="blur"
                   blurDataURL={currentImage.blurDataUrl}
-                  width={currentImage.width > currentImage.height ? 1920 : 1280}
-                  height={
-                    currentImage.height > currentImage.width ? 1920 : 1280
-                  }
-                  format="webp"
+                  width={currentImage.width > currentImage.height ? 1280 : 853}
+                  height={currentImage.height > currentImage.width ? 1280 : 853}
+                  format="avif"
                   priority
                   alt="Willian Justen - Photo"
                 />
