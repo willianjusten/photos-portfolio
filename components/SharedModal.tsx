@@ -1,15 +1,12 @@
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import { CldImage } from 'next-cloudinary'
-import { useState } from 'react'
 import { useSwipeable } from 'react-swipeable'
 import { variants } from 'utils/animationVariants'
 
-import { range } from 'utils/range'
-import type { ImageProps, SharedModalProps } from 'utils/types'
+import type { SharedModalProps } from 'utils/types'
 import UserActions from './UserActions'
 import ModalNavigation from './ModalNavigation'
 import ModalBack from './ModalBack'
-import ModalBottomBar from './ModalBottomBar'
 
 export default function SharedModal({
   index,
@@ -20,10 +17,6 @@ export default function SharedModal({
   currentPhoto,
   direction
 }: SharedModalProps) {
-  let filteredImages = images?.filter((img: ImageProps) =>
-    range(index - 15, index + 15).includes(img.id)
-  )
-
   const handlers = useSwipeable({
     onSwipedLeft: () => {
       if (index < images?.length - 1) {
@@ -100,14 +93,6 @@ export default function SharedModal({
               </motion.div>
             </AnimatePresence>
           </div>
-        </div>
-
-        <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
-          {navigation && (
-            <ModalBottomBar
-              {...{ images, filteredImages, index, changePhotoId }}
-            />
-          )}
         </div>
       </div>
     </MotionConfig>
