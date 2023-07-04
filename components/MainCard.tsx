@@ -12,9 +12,9 @@ export default function MainCard() {
         <h1 className="mb-2 text-lg font-bold tracking-widest sm:text-xl">
           Willian Justen
         </h1>
-        <p className="text-sm text-white/75 sm:max-w-[45ch] sm:text-base">
-          Brazilian based photographer and Software Engineer that loves to
-          travel and take photos.
+        <p className="text-sm text-white/75">
+          Brazilian-based photographer and Software Engineer. Here I'll focus on
+          Street Photography, other photos you can find on the links down below.
         </p>
 
         <SocialLinks />
