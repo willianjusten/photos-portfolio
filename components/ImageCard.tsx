@@ -35,7 +35,7 @@ export default function ImageCard({
         src={public_id}
         width={720}
         height={480}
-        format="avif"
+        format="webp"
         loading="lazy"
         sizes="(max-width: 640px) 100vw,
                   (max-width: 1280px) 50vw,
