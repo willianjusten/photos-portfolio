@@ -8,6 +8,11 @@ export default function Menu({ folders, selectedFolder, setSelectedFolder }) {
 
   useClickOutside($menu, () => setMenuOpen(false))
 
+  const handleClick = folder => {
+    setSelectedFolder(folder)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <div ref={$menu}>
       <img
@@ -35,7 +40,7 @@ export default function Menu({ folders, selectedFolder, setSelectedFolder }) {
             className={`rounded-fullpx-3 z-10 cursor-pointer py-1 transition hover:text-white ${
               selectedFolder === folder ? 'text-details' : 'text-white/50'
             }`}
-            onClick={() => setSelectedFolder(folder)}
+            onClick={() => handleClick(folder)}
           >
             {folder}
           </div>
@@ -47,7 +52,7 @@ export default function Menu({ folders, selectedFolder, setSelectedFolder }) {
           className={`rounded-fullpx-3 z-10 cursor-pointer py-1 transition hover:text-white ${
             selectedFolder === 'All' ? 'text-details' : 'text-white/50'
           }`}
-          onClick={() => setSelectedFolder('All')}
+          onClick={() => handleClick('All')}
         >
           All photos
         </div>

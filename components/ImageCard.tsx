@@ -9,9 +9,7 @@ export default function ImageCard({
   height,
   blurDataUrl,
   lastViewedPhoto,
-  lastViewedPhotoRef,
-  folder,
-  selectedFolder
+  lastViewedPhotoRef
 }: ImageProps & {
   lastViewedPhoto: string | null
   lastViewedPhotoRef: React.MutableRefObject<HTMLAnchorElement | null>
@@ -24,9 +22,7 @@ export default function ImageCard({
       as={`/p/${id}`}
       ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
       shallow
-      className={`${
-        selectedFolder !== 'All' && selectedFolder !== folder ? 'hidden' : ''
-      } after:content group relative block w-full  cursor-zoom-in transition after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight`}
+      className={`after:content group relative block w-full  cursor-zoom-in transition after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight`}
     >
       <CldImage
         alt="Willian Justen photo"

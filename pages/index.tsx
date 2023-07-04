@@ -21,6 +21,7 @@ const Home: NextPage = ({
   images: ImageProps[]
   folders: string[]
 }) => {
+  const [data, setData] = useState(images)
   const [selectedFolder, setSelectedFolder] = useState('All')
   const router = useRouter()
   const { photoId } = router.query
@@ -60,7 +61,7 @@ const Home: NextPage = ({
 
       if (windowBottom >= docHeight - threshold) {
         // We've reached the bottom of the page (with threshold), load more images
-        const nextChunk = images.slice(
+        const nextChunk = data.slice(
           visibleImages.length,
           visibleImages.length + chunkSize
         )
@@ -73,12 +74,16 @@ const Home: NextPage = ({
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [visibleImages, images, chunkSize])
+  }, [visibleImages, data, chunkSize])
 
   useEffect(() => {
-    const initialVisibleImages = images.slice(0, initialLoadCount)
+    const initialVisibleImages = data.slice(0, initialLoadCount)
     setVisibleImages(initialVisibleImages)
-  }, [images, initialLoadCount])
+  }, [data, initialLoadCount])
+
+  useEffect(() => {
+    setData(images.filter(({ folder }) => folder === selectedFolder))
+  }, [selectedFolder])
 
   return (
     <>
