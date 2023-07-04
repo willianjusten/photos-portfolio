@@ -96,7 +96,7 @@ export default Home
 
 export async function getStaticProps() {
   const results = await cloudinary.v2.search
-    .sort_by('folder', 'desc')
+    .sort_by('folder', 'asc')
     .max_results(2000)
     .execute()
 
