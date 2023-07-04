@@ -35,8 +35,8 @@ export default function ImageCard({
         placeholder="blur"
         blurDataURL={blurDataUrl}
         src={public_id}
-        width={width > height ? 720 : 480}
-        height={height > width ? 720 : 480}
+        width={width > height ? 1280 : 853}
+        height={height > width ? 1280 : 853}
         format="webp"
         loading="lazy"
         sizes="(max-width: 640px) 100vw,

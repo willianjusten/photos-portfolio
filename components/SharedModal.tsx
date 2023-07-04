@@ -87,10 +87,6 @@ export default function SharedModal({
                   format="webp"
                   priority
                   alt="Willian Justen - Photo"
-                  sizes="
-                    (max-width: 767px) 100vw,
-                    50vw
-                  "
                 />
               </motion.div>
             </AnimatePresence>
