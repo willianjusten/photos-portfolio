@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 const InfiniteScroll = ({ children, chunkSize }) => {
   const [visibleData, setVisibleData] = useState([])
-  const [startIndex, setStartIndex] = useState(0)
+  const [lastLoadedIndex, setLastLoadedIndex] = useState(0)
 
   useEffect(() => {
     setVisibleData(React.Children.toArray(children).slice(0, chunkSize))
@@ -13,20 +13,21 @@ const InfiniteScroll = ({ children, chunkSize }) => {
     const threshold = 200 // Adjust this value as needed
 
     if (scrollTop + clientHeight >= scrollHeight - threshold) {
-      const endIndex = startIndex + chunkSize
+      const startIndex = lastLoadedIndex
+      const endIndex = lastLoadedIndex + chunkSize
       const nextChunk = React.Children.toArray(children).slice(
         startIndex,
         endIndex
       )
       setVisibleData(prevData => [...prevData, ...nextChunk])
-      setStartIndex(endIndex)
+      setLastLoadedIndex(endIndex)
     }
   }
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [visibleData, startIndex])
+  }, [visibleData, lastLoadedIndex])
 
   return (
     <div>
