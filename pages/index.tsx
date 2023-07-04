@@ -23,6 +23,9 @@ const Home: NextPage = ({
   const router = useRouter()
   const { photoId } = router.query
   const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto()
+  const initialLoadCount = 20
+  const chunkSize = 20
+  const [visibleImages, setVisibleImages] = useState([])
 
   const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null)
 
@@ -33,6 +36,47 @@ const Home: NextPage = ({
       setLastViewedPhoto(null)
     }
   }, [photoId, lastViewedPhoto, setLastViewedPhoto])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!window) return
+      const windowHeight =
+        'innerHeight' in window
+          ? window.innerHeight
+          : document.documentElement.offsetHeight
+      const body = document.body
+      const html = document.documentElement
+      const docHeight = Math.max(
+        body.scrollHeight,
+        body.offsetHeight,
+        html.clientHeight,
+        html.scrollHeight,
+        html.offsetHeight
+      )
+      const windowBottom = windowHeight + window.pageYOffset
+      const threshold = 200 // Adjust the threshold value as per your requirements
+
+      if (windowBottom >= docHeight - threshold) {
+        // We've reached the bottom of the page (with threshold), load more images
+        const nextChunk = images.slice(
+          visibleImages.length,
+          visibleImages.length + chunkSize
+        )
+        setVisibleImages(prevVisibleImages => [
+          ...prevVisibleImages,
+          ...nextChunk
+        ])
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [visibleImages, images, chunkSize])
+
+  useEffect(() => {
+    const initialVisibleImages = images.slice(0, initialLoadCount)
+    setVisibleImages(initialVisibleImages)
+  }, [images, initialLoadCount])
 
   return (
     <>
@@ -59,7 +103,7 @@ const Home: NextPage = ({
         <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
           <MainCard />
 
-          {images.map(
+          {visibleImages.map(
             ({ id, public_id, blurDataUrl, width, height, folder }) => (
               <ImageCard
                 key={id}
