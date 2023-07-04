@@ -19,7 +19,7 @@ const Home: NextPage = ({
   images: ImageProps[]
   folders: string[]
 }) => {
-  const [showMain, setShowMain] = useState(true)
+  const [hasMainCard, setHasMainCard] = useState(false)
   const [data, setData] = useState(images)
   const [selectedFolder, setSelectedFolder] = useState('All')
   const router = useRouter()
@@ -119,20 +119,22 @@ const Home: NextPage = ({
             media: [640, 980, 1280, 1536]
           }}
           render={({ id, public_id, blurDataUrl, width, height }, index) => {
+            if (!hasMainCard) {
+              setHasMainCard(true)
+              return <MainCard />
+            }
+
             return (
-              <Fragment key={id}>
-                {showMain && <MainCard ref={() => setShowMain(false)} />}
-                <ImageCard
-                  key={id}
-                  id={id}
-                  public_id={public_id}
-                  blurDataUrl={blurDataUrl}
-                  width={width}
-                  height={height}
-                  lastViewedPhoto={lastViewedPhoto}
-                  lastViewedPhotoRef={lastViewedPhotoRef}
-                />
-              </Fragment>
+              <ImageCard
+                key={id}
+                id={id}
+                public_id={public_id}
+                blurDataUrl={blurDataUrl}
+                width={width}
+                height={height}
+                lastViewedPhoto={lastViewedPhoto}
+                lastViewedPhotoRef={lastViewedPhotoRef}
+              />
             )
           }}
         />
