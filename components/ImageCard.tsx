@@ -36,7 +36,7 @@ export default function ImageCard({
         loading="lazy"
         sizes="
           (max-width: 648px) 100vw,
-          30vw
+          25vw
         "
       />
     </Link>
