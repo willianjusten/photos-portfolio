@@ -74,7 +74,7 @@ const Home: NextPage = ({
         <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
           <MainCard />
 
-          {reorder(images, 5).map(({ id, public_id, blurDataUrl, folder }) => (
+          {reorder(images, 4).map(({ id, public_id, blurDataUrl, folder }) => (
             <ImageCard
               key={id}
               id={id}
