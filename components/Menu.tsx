@@ -10,6 +10,7 @@ export default function Menu({ folders, selectedFolder, setSelectedFolder }) {
 
   const handleClick = folder => {
     setSelectedFolder(folder)
+    setMenuOpen(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
