@@ -34,10 +34,12 @@ export default function ImageCard({
         height={height > width ? 1280 : 853}
         format="webp"
         loading="lazy"
-        sizes="(max-width: 640px) 100vw,
-                  (max-width: 1280px) 50vw,
-                  (max-width: 1536px) 33vw,
-                  25vw"
+        sizes="
+          (max-width: 648px) 100vw,
+          (min-width: 648px) and (max-width: 980px) 50vw,
+          (min-width: 1280px) and (max-width: 1536px) 33vw,
+          20vw
+        "
       />
     </Link>
   )
