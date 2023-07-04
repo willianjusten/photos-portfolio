@@ -82,7 +82,11 @@ const Home: NextPage = ({
   }, [data, initialLoadCount])
 
   useEffect(() => {
-    setData(images.filter(({ folder }) => folder === selectedFolder))
+    setData(
+      images.filter(({ folder }) =>
+        selectedFolder === 'All' ? true : folder === selectedFolder
+      )
+    )
   }, [selectedFolder])
 
   return (
@@ -115,9 +119,12 @@ const Home: NextPage = ({
               gap: [16, 16, 16, 16],
               media: [640, 980, 1280, 1536]
             }}
-            render={({ id, public_id, blurDataUrl, width, height, folder }) => (
+            render={(
+              { id, public_id, blurDataUrl, width, height, folder },
+              index
+            ) => (
               <div key={id}>
-                {id === 0 && <MainCard />}
+                {index === 0 && <MainCard />}
                 <ImageCard
                   id={id}
                   public_id={public_id}
