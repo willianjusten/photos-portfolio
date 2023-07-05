@@ -45,7 +45,6 @@ export default function SharedModal({
         style={{ aspectRatio: currentImage.aspect_ratio }}
         {...handlers}
       >
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         {/* Main image */}
         <div className="w-full overflow-hidden">
           <div
