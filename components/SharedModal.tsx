@@ -41,7 +41,7 @@ export default function SharedModal({
       }}
     >
       <div
-        className="relative z-50 flex w-full max-w-7xl items-center wide:h-full xl:taller-than-854:h-auto"
+        className="relative flex w-full max-w-7xl items-center wide:h-full xl:taller-than-854:h-auto"
         style={{ aspectRatio: currentImage.aspect_ratio }}
         {...handlers}
       >
@@ -76,7 +76,7 @@ export default function SharedModal({
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="absolute"
+                className="absolute z-40"
               >
                 <CldImage
                   src={currentImage.public_id}

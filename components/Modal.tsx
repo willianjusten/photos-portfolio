@@ -70,6 +70,7 @@ export default function Modal({
         className="fixed inset-0 z-30 bg-black/70 backdrop-blur-2xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
+        onClick={handleClose}
       />
       <SharedModal
         index={curIndex}
