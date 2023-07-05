@@ -8,7 +8,7 @@ import SharedModal from './SharedModal'
 
 export default function Modal({
   images,
-  onClose,
+  onClose
 }: {
   images: ImageProps[]
   onClose?: () => void
@@ -36,7 +36,7 @@ export default function Modal({
     setCurIndex(newVal)
     router.push(
       {
-        query: { photoId: newVal },
+        query: { photoId: newVal }
       },
       `/p/${newVal}`,
       { shallow: true }
@@ -63,14 +63,6 @@ export default function Modal({
       initialFocus={overlayRef}
       className="fixed inset-0 z-10 flex items-center justify-center"
     >
-      <Dialog.Overlay
-        ref={overlayRef}
-        as={motion.div}
-        key="backdrop"
-        className="fixed inset-0 z-30 bg-black/70 backdrop-blur-2xl"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-      />
       <SharedModal
         index={curIndex}
         direction={direction}
