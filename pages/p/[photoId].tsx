@@ -30,7 +30,20 @@ const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
 export default Home
 
 export const getStaticProps: GetStaticProps = async context => {
-  const results = await getResults()
+  const results = await cloudinary.v2.search
+    .sort_by('folder', 'asc')
+    .max_results(2000)
+    .execute()
+
+  if (results?.next_cursor) {
+    const moreResults = await cloudinary.v2.search
+      .sort_by('folder', 'asc')
+      .next_cursor(results?.next_cursor)
+      .max_results(2000)
+      .execute()
+
+    results.resources = results.resources.concat(moreResults.resources)
+  }
 
   let reducedResults: ImageProps[] = []
   let i = 0
@@ -63,6 +76,16 @@ export async function getStaticPaths() {
     .sort_by('folder', 'asc')
     .max_results(2000)
     .execute()
+
+  if (results?.next_cursor) {
+    const moreResults = await cloudinary.v2.search
+      .sort_by('folder', 'asc')
+      .next_cursor(results?.next_cursor)
+      .max_results(2000)
+      .execute()
+
+    results.resources = results.resources.concat(moreResults.resources)
+  }
 
   let fullPaths = []
   for (let i = 0; i < results.resources.length; i++) {
