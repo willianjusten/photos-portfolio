@@ -141,6 +141,16 @@ export async function getStaticProps() {
     .max_results(2000)
     .execute()
 
+  if (results?.next_cursor) {
+    const moreResults = await cloudinary.v2.search
+      .sort_by('folder', 'asc')
+      .next_cursor(results?.next_cursor)
+      .max_results(2000)
+      .execute()
+
+    results.resources = results.resources.concat(moreResults.resources)
+  }
+
   let reducedResults: ImageProps[] = []
   let folders: string[] = []
 
