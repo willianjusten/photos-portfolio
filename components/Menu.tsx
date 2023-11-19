@@ -43,7 +43,7 @@ export default function Menu({ folders, selectedFolder, setSelectedFolder }) {
             }`}
             onClick={() => handleClick(folder)}
           >
-            {folder}
+            {folder.split('-')[1]}
           </div>
         ))}
 
