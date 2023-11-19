@@ -137,13 +137,13 @@ export default Home
 
 export async function getStaticProps() {
   const results = await cloudinary.v2.search
-    .sort_by('folder', 'asc')
+    .sort_by('folder', 'desc')
     .max_results(2000)
     .execute()
 
   if (results?.next_cursor) {
     const moreResults = await cloudinary.v2.search
-      .sort_by('folder', 'asc')
+      .sort_by('folder', 'desc')
       .next_cursor(results?.next_cursor)
       .max_results(2000)
       .execute()
