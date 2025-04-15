@@ -135,21 +135,24 @@ const Home: NextPage = ({
 
 export default Home
 
-export async function getStaticProps() {
+async function getAllResults(cursor = null, allResources = []) {
   const results = await cloudinary.v2.search
     .sort_by('folder', 'desc')
     .max_results(2000)
+    .next_cursor(cursor)
     .execute()
 
-  if (results?.next_cursor) {
-    const moreResults = await cloudinary.v2.search
-      .sort_by('folder', 'desc')
-      .next_cursor(results?.next_cursor)
-      .max_results(2000)
-      .execute()
+  allResources.push(...results.resources)
 
-    results.resources = results.resources.concat(moreResults.resources)
+  if (results.next_cursor) {
+    return getAllResults(results.next_cursor, allResources)
   }
+
+  return { resources: allResources }
+}
+
+export async function getStaticProps() {
+  const results = await getAllResults()
 
   let reducedResults: ImageProps[] = []
   let folders: string[] = []
@@ -173,14 +176,16 @@ export async function getStaticProps() {
     i++
   }
 
-  const blurImagePromises = results?.resources?.map((image: ImageProps) => {
-    return getBase64ImageUrl(image)
-  })
-  const imagesWithBlurDataUrls = await Promise.all(blurImagePromises)
+  console.log(reducedResults.length)
 
-  for (let i = 0; i < reducedResults.length; i++) {
-    reducedResults[i].blurDataUrl = imagesWithBlurDataUrls[i]
-  }
+  // const blurImagePromises = results?.resources?.map((image: ImageProps) => {
+  //   return getBase64ImageUrl(image)
+  // })
+  // const imagesWithBlurDataUrls = await Promise.all(blurImagePromises)
+
+  // for (let i = 0; i < reducedResults.length; i++) {
+  //   reducedResults[i].blurDataUrl = imagesWithBlurDataUrls[i]
+  // }
 
   return {
     props: {
