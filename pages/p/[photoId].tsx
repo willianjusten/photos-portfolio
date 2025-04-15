@@ -58,21 +58,24 @@ export const getStaticProps: GetStaticProps = async context => {
   }
 }
 
-export async function getStaticPaths() {
+async function getAllResults(cursor = null, allResources = []) {
   const results = await cloudinary.v2.search
     .sort_by('folder', 'desc')
     .max_results(2000)
+    .next_cursor(cursor)
     .execute()
 
-  if (results?.next_cursor) {
-    const moreResults = await cloudinary.v2.search
-      .sort_by('folder', 'desc')
-      .next_cursor(results?.next_cursor)
-      .max_results(2000)
-      .execute()
+  allResources.push(...results.resources)
 
-    results.resources = results.resources.concat(moreResults.resources)
+  if (results.next_cursor) {
+    return getAllResults(results.next_cursor, allResources)
   }
+
+  return { resources: allResources }
+}
+
+export async function getStaticPaths() {
+  const results = await getAllResults()
 
   let fullPaths = []
   for (let i = 0; i < results.resources.length; i++) {

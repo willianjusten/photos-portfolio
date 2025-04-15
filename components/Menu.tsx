@@ -31,7 +31,7 @@ export default function Menu({ folders, selectedFolder, setSelectedFolder }) {
       </button>
 
       <menu
-        className={`fixed bottom-20 right-5 mb-5 flex w-48 flex-col gap-2 rounded-lg bg-medium p-5 shadow-md transition ${
+        className={`fixed bottom-20 right-5 z-10 mb-5 flex w-48 flex-col gap-2 rounded-lg bg-medium p-5 shadow-md transition ${
           menuOpen ? 'visible' : 'invisible'
         }`}
       >
