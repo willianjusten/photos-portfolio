@@ -176,16 +176,14 @@ export async function getStaticProps() {
     i++
   }
 
-  console.log(reducedResults.length)
+  const blurImagePromises = results?.resources?.map((image: ImageProps) => {
+    return getBase64ImageUrl(image)
+  })
+  const imagesWithBlurDataUrls = await Promise.all(blurImagePromises)
 
-  // const blurImagePromises = results?.resources?.map((image: ImageProps) => {
-  //   return getBase64ImageUrl(image)
-  // })
-  // const imagesWithBlurDataUrls = await Promise.all(blurImagePromises)
-
-  // for (let i = 0; i < reducedResults.length; i++) {
-  //   reducedResults[i].blurDataUrl = imagesWithBlurDataUrls[i]
-  // }
+  for (let i = 0; i < reducedResults.length; i++) {
+    reducedResults[i].blurDataUrl = imagesWithBlurDataUrls[i]
+  }
 
   return {
     props: {
